@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "20.5.0"
+  },
   "dependencies": {
     "@types/express": "^4.17.13",
     "bcrypt": "^5.1.0",
