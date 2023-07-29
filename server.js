@@ -14,9 +14,10 @@ const app = express();
 
 /*
 database: report_data
-username: 243pn8bu70qn8hjvssv3
+username: cch7hcl0g45rn31tzbd4
 host: aws.connect.psdb.cloud
-password: pscale_pw_h9T8nbADKpl9FetJuvh82zvZEobS05QnOoUmG9o2aRZ
+password: pscale_pw_irOIl3hhKrERM02LOIT3aS7Jzs4lAlxWpNh78OZaI8t
+
 */
 
 // const dbUrl = process.env.DATABASE_URL;
