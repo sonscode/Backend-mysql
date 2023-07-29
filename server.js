@@ -12,6 +12,13 @@ const app = express();
 // username: ixm064s012t67fchtjvt
 //password: pscale_pw_ORdV8uVzLeIsMhE7Cb15hg3Q3OUtj2PL2cOXCezMzh6
 
+/*
+database: report_data
+username: 243pn8bu70qn8hjvssv3
+host: aws.connect.psdb.cloud
+password: pscale_pw_h9T8nbADKpl9FetJuvh82zvZEobS05QnOoUmG9o2aRZ
+*/
+
 // const dbUrl = process.env.DATABASE_URL;
 
 // // Middleware to parse JSON data
