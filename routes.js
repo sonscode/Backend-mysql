@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
 
 // Middleware to parse JSON data
@@ -140,6 +140,97 @@ router.delete('/reports/:id', (req, res) => {
       }
     });
   });
+
+// Add more API endpoints for other CRUD operations as needed
+
+module.exports = router;
+*/
+
+
+
+
+const express = require('express');
+const router = express.Router();
+const Report = require('./models/report'); // Import your Mongoose model for the report collection
+
+// Middleware to parse JSON data
+router.use(express.json());
+
+// Get all reports
+router.get('/reports', async (req, res) => {
+  try {
+    const reports = await Report.find({});
+    res.json(reports);
+  } catch (err) {
+    console.error('Error fetching data from the database:', err);
+    res.status(500).json({ error: 'Failed to fetch data from the database' });
+  }
+});
+
+// Get a single report by ID
+router.get('/reports/:id', async (req, res) => {
+  const reportId = req.params.id;
+  try {
+    const report = await Report.findById(reportId);
+    if (!report) {
+      res.status(404).json({ message: 'Report not found' });
+    } else {
+      res.json(report);
+    }
+  } catch (err) {
+    console.error('Error fetching data from the database:', err);
+    res.status(500).json({ error: 'Failed to fetch data from the database' });
+  }
+});
+
+// POST: Create a new report
+router.post('/reports', async (req, res) => {
+    // Convert the id from number to string
+    // req.body._id = req.body.id.toString();
+    
+  try {
+    const reportData = req.body;
+    const newReport = await Report.create(reportData);
+    res.json({ message: 'Report created successfully', id: newReport._id });
+  } catch (err) {
+    console.error('Error inserting data into the database:', err);
+    res.status(500).json({ error: 'Failed to insert data into the database' });
+  }
+});
+
+// PUT: Update an existing report by ID
+router.put('/reports/:id', async (req, res) => {
+  // req.body._id = req.body.id.toString();
+  const reportId = req.params.id;
+  try {
+    const updatedReport = await Report.findByIdAndUpdate(reportId, req.body, { new: true });
+    if (!updatedReport) {
+      res.status(404).json({ message: 'Report not found' });
+    } else {
+      res.json({ message: 'Report updated successfully' });
+    }
+  } catch (err) {
+    console.error('Error updating data in the database:', err);
+    res.status(500).json({ error: 'Failed to update data in the database' });
+  }
+});
+
+// DELETE: Delete a report by ID
+router.delete('/reports/:id', async (req, res) => {
+  // req.body._id = req.body.id.toString();
+  const reportId = req.params.id;
+  try {
+    const deletedReport = await Report.findByIdAndDelete(reportId);
+    if (!deletedReport) {
+      res.status(404).json({ message: 'Report not found' });
+    } else {
+      res.json({ message: 'Report deleted successfully' });
+    }
+  } catch (err) {
+    console.error('Error deleting data from the database:', err);
+    res.status(500).json({ error: 'Failed to delete data from the database' });
+  }
+});
 
 // Add more API endpoints for other CRUD operations as needed
 
