@@ -12,7 +12,8 @@
     "faunadb": "^4.8.0",
     "jsonwebtoken": "^9.0.1",
     "mysql": "^2.18.1",
-    "mysql2": "^3.5.2"
+    "mysql2": "^3.5.2",
+    "pg": "^8.11.1"
   },
   "scripts": {
     "start": "node server.js",

@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const routes = require('./routes');
 const cors = require('cors'); // Import the cors package
 require('dotenv').config();
+const { Pool } = require('pg'); // Use the pg library for PostgreSQL
 
 const app = express();
 
@@ -20,7 +21,15 @@ password: pscale_pw_W5PADJVywyvU7anIanE7fBqA81LbcZUy82II6LQoyL9
 
 */
 
-// const dbUrl = process.env.DATABASE_URL;
+/* Cockroach DB:
+SQL user: ulrich
+ password: -7Frwl4bnLV7MYO4iQXSWg
+ 
+connection String: postgresql://ulrich:-7Frwl4bnLV7MYO4iQXSWg@song-hermit-9381.8nj.cockroachlabs.cloud:26257/report_data?sslmode=verify-full
+
+ */
+
+/* const dbUrl = process.env.DATABASE_URL;
 
 // // Middleware to parse JSON data
 // app.use(express.json());
@@ -49,8 +58,11 @@ password: pscale_pw_W5PADJVywyvU7anIanE7fBqA81LbcZUy82II6LQoyL9
 // app.listen(port, () => {
 //   console.log(`Server started and listening on port ${port}`);
 // });
+*/
 
-const dbUrl = process.env.DATABASE_URL;
+// New comment for planet scale
+
+/*const dbUrl = process.env.DATABASE_URL;
 
 // Middleware to parse JSON data
 app.use(express.json());
@@ -73,3 +85,37 @@ app.listen(port, () => {
 });
 
 console.log("Server listaning to Planet Scale")
+*/
+
+//Cocroach DB new trial
+
+const dbUrl = process.env.DATABASE_URL;
+
+// Middleware to parse JSON data
+app.use(express.json());
+
+// Enable CORS for all routes
+app.use(cors());
+
+// Create a PostgreSQL pool using the DATABASE_URL from the environment variables
+const pool = new Pool({
+  connectionString: dbUrl,
+  ssl: {
+    // Set up SSL options using the root.crt certificate
+    rejectUnauthorized: true, // Set to true to verify the certificate
+    ca: process.env.PGSSLROOTCERT, // Pass the root.crt certificate content here
+  },
+});
+
+// Share the pool variable using app.locals
+app.locals.pool = pool;
+
+// Use the routes middleware
+app.use('/api', routes);
+
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server started and listening on port ${port}`);
+});
+
+console.log("Server listening to CockroachDB");
