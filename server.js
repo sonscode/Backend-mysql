@@ -5,6 +5,8 @@ const cors = require('cors'); // Import the cors package
 require('dotenv').config();
 const { Pool } = require('pg'); // Use the pg library for PostgreSQL
 
+
+
 const app = express();
 
 //Fauna key:  fnAFKD_UJiAAUeeHSxWimZ_zneJ8sBiNe7qZ3rV_
@@ -41,7 +43,17 @@ connection String: postgresql://ulrich:-7Frwl4bnLV7MYO4iQXSWg@song-hermit-9381.8
 //   database: 'report_data'
 // };
 
+/*
+YugabyteDB
+user: admin
+password: ib5V-RKhmEnFYnAwDiLcNG-B_MUkqp
 
+postgresql://admin:ib5V-RKhmEnFYnAwDiLcNG-B_MUkqp@us-east-1.bf7b8210-7938-42f2-a8b5-c172da5edc14.aws.ybdb.io:5433/ 
+yugabyte?ssl=true&sslmode=verify-full&sslrootcert=/home/root004/Downloads
+
+*/
+
+/*
 // const pool = mysql.createPool(dbConfig);
 
 
@@ -60,7 +72,34 @@ connection String: postgresql://ulrich:-7Frwl4bnLV7MYO4iQXSWg@song-hermit-9381.8
 // });
 */
 
+
 // New comment for planet scale
+
+// const dbUrl = process.env.DATABASE_URL;
+
+// // Middleware to parse JSON data
+// app.use(express.json());
+
+// // Enable CORS for all routes
+// app.use(cors());
+
+// // Create a MySQL pool using the DATABASE_URL from the environment variables
+// const pool = mysql.createPool(dbUrl);
+
+// // Share the pool variable using app.locals
+// app.locals.pool = pool;
+
+// // Use the routes middleware
+// app.use('/api', routes); // You can prefix all your API endpoints with '/api', e.g., '/api/reports'
+
+// const port = 3000;
+// app.listen(port, () => {
+//   console.log(`Server started and listening on port ${port}`);
+// });
+
+// console.log("Server listaning to YugaByte DB")
+
+//YUGABYTE CONNECTION
 
 const dbUrl = process.env.DATABASE_URL;
 
@@ -70,8 +109,10 @@ app.use(express.json());
 // Enable CORS for all routes
 app.use(cors());
 
-// Create a MySQL pool using the DATABASE_URL from the environment variables
-const pool = mysql.createPool(dbUrl);
+// Create a PostgreSQL pool using the DATABASE_URL from the environment variables
+const pool = new Pool({
+  connectionString: dbUrl,
+});
 
 // Share the pool variable using app.locals
 app.locals.pool = pool;
@@ -84,39 +125,4 @@ app.listen(port, () => {
   console.log(`Server started and listening on port ${port}`);
 });
 
-console.log("Server listaning to Planet Scale")
-
-
-//Cocroach DB new trial
-/*
-const dbUrl = process.env.DATABASE_URL;
-
-// Middleware to parse JSON data
-app.use(express.json());
-
-// Enable CORS for all routes
-app.use(cors());
-
-// Create a PostgreSQL pool using the DATABASE_URL from the environment variables
-const pool = new Pool({
-  connectionString: dbUrl,
-  ssl: {
-    // Set up SSL options using the root.crt certificate
-    rejectUnauthorized: true, // Set to true to verify the certificate
-    ca: process.env.PGSSLROOTCERT, // Pass the root.crt certificate content here
-  },
-});
-
-// Share the pool variable using app.locals
-app.locals.pool = pool;
-
-// Use the routes middleware
-app.use('/api', routes);
-
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server started and listening on port ${port}`);
-});
-
-console.log("Server listening to CockroachDB");
-*/
+console.log("Server listening to Yugabyte DB");
