@@ -15,9 +15,9 @@ const app = express();
 
 /*
 database: report_data
-username: mngmzncof3gc46ga5nwl
+username: jf1agrf113mq0cknbtul
 host: aws.connect.psdb.cloud
-password: pscale_pw_W5PADJVywyvU7anIanE7fBqA81LbcZUy82II6LQoyL9
+password: pscale_pw_wyR6osiLjc1NghELMZb7DjFEBj2ZfdJKZk0gUca8I3K
 
 */
 
@@ -62,7 +62,7 @@ connection String: postgresql://ulrich:-7Frwl4bnLV7MYO4iQXSWg@song-hermit-9381.8
 
 // New comment for planet scale
 
-/*const dbUrl = process.env.DATABASE_URL;
+const dbUrl = process.env.DATABASE_URL;
 
 // Middleware to parse JSON data
 app.use(express.json());
@@ -85,10 +85,10 @@ app.listen(port, () => {
 });
 
 console.log("Server listaning to Planet Scale")
-*/
+
 
 //Cocroach DB new trial
-
+/*
 const dbUrl = process.env.DATABASE_URL;
 
 // Middleware to parse JSON data
@@ -119,3 +119,4 @@ app.listen(port, () => {
 });
 
 console.log("Server listening to CockroachDB");
+*/

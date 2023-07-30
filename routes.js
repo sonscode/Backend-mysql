@@ -64,7 +64,9 @@ const reportData = fields.map((field) => {
     return value === "" ? 0 : value;
   });
   
-      
+  // console.log("QUERY" +query)
+  // console.log("REPORTDATA" +reportData);
+
   pool.query(query, reportData, (err, results) => {
     if (err) {
       console.error('Error inserting data into the database:', err);
