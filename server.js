@@ -14,9 +14,9 @@ const app = express();
 
 /*
 database: report_data
-username: cch7hcl0g45rn31tzbd4
+username: mngmzncof3gc46ga5nwl
 host: aws.connect.psdb.cloud
-password: pscale_pw_irOIl3hhKrERM02LOIT3aS7Jzs4lAlxWpNh78OZaI8t
+password: pscale_pw_W5PADJVywyvU7anIanE7fBqA81LbcZUy82II6LQoyL9
 
 */
 
