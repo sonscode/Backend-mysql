@@ -153,20 +153,29 @@ const express = require('express');
 const router = express.Router();
 const Report = require('./models/report'); // Import your Mongoose model for the report collection
 
+
+
 // Middleware to parse JSON data
 router.use(express.json());
-var rid;
+
+// Route to check MongoDB connection status
+router.get('/connection-status', (req, res) => {
+  if (mongoose.connection.readyState === 1) {
+    res.send('Connected to MongoDB!');
+  } else {
+    res.send('Not connected to MongoDB!');
+  }
+});
+
 // Get all reports
 router.get('/reports', async (req, res) => {
   try {
     const reports = await Report.find({});
     res.json(reports);
-    res.json('LOOKS GOOD!')
     
   } catch (err) {
     console.error('Error fetching data from the database:', err);
     res.status(500).json({ error: 'Failed to fetch data from the database' });
-    res.status(500).json('CONNECTION FAILED!')
   }
 });
 

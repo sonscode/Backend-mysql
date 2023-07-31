@@ -109,11 +109,6 @@ db.once('open', () => {
 // Use the routes middleware
 app.use('/api', routes); // You can prefix all your API endpoints with '/api', e.g., '/api/reports'
 
-// Import the route for MongoDB connection status
-const connectionStatusRoute = require('./routes/connectionStatus');
-
-// Use the connectionStatusRoute
-app.use('/api', connectionStatusRoute);
 
 const port = 3000;
 app.listen(port, () => {
