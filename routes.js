@@ -161,10 +161,12 @@ router.get('/reports', async (req, res) => {
   try {
     const reports = await Report.find({});
     res.json(reports);
+    res.json('LOOKS GOOD!')
     
   } catch (err) {
     console.error('Error fetching data from the database:', err);
     res.status(500).json({ error: 'Failed to fetch data from the database' });
+    res.status(500).json('CONNECTION FAILED!')
   }
 });
 

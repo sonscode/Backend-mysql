@@ -103,10 +103,17 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB Atlas!');
+  document.write("Connected to MongoDB")
 });
 
 // Use the routes middleware
 app.use('/api', routes); // You can prefix all your API endpoints with '/api', e.g., '/api/reports'
+
+// Import the route for MongoDB connection status
+const connectionStatusRoute = require('./routes/connectionStatus');
+
+// Use the connectionStatusRoute
+app.use('/api', connectionStatusRoute);
 
 const port = 3000;
 app.listen(port, () => {
