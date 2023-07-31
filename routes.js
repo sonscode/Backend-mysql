@@ -155,12 +155,13 @@ const Report = require('./models/report'); // Import your Mongoose model for the
 
 // Middleware to parse JSON data
 router.use(express.json());
-
+var rid;
 // Get all reports
 router.get('/reports', async (req, res) => {
   try {
     const reports = await Report.find({});
     res.json(reports);
+    
   } catch (err) {
     console.error('Error fetching data from the database:', err);
     res.status(500).json({ error: 'Failed to fetch data from the database' });
@@ -185,8 +186,6 @@ router.get('/reports/:id', async (req, res) => {
 
 // POST: Create a new report
 router.post('/reports', async (req, res) => {
-    // Convert the id from number to string
-    // req.body._id = req.body.id.toString();
     
   try {
     const reportData = req.body;
@@ -217,8 +216,9 @@ router.put('/reports/:id', async (req, res) => {
 
 // DELETE: Delete a report by ID
 router.delete('/reports/:id', async (req, res) => {
-  // req.body._id = req.body.id.toString();
-  const reportId = req.params.id;
+
+  const reportId = req.params.id
+  // console.log("Report ID: "+ reportId)
   try {
     const deletedReport = await Report.findByIdAndDelete(reportId);
     if (!deletedReport) {
@@ -227,7 +227,7 @@ router.delete('/reports/:id', async (req, res) => {
       res.json({ message: 'Report deleted successfully' });
     }
   } catch (err) {
-    console.error('Error deleting data from the database:', err);
+    console.error('Error deleting data from the database with id:', reportId, ":",err);
     res.status(500).json({ error: 'Failed to delete data from the database' });
   }
 });
