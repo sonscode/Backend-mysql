@@ -152,14 +152,14 @@ module.exports = router;
 const express = require('express');
 const router = express.Router();
 const Report = require('./models/report'); // Import your Mongoose model for the report collection
-
+const mongoose = require('mongoose');
 
 
 // Middleware to parse JSON data
 router.use(express.json());
 
 // Route to check MongoDB connection status
-router.get('/connection-status', (req, res) => {
+router.get('/status', (req, res) => {
   if (mongoose.connection.readyState === 1) {
     res.send('Connected to MongoDB!');
   } else {
