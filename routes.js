@@ -147,11 +147,10 @@ module.exports = router;
 */
 
 
-
-
 const express = require('express');
 const router = express.Router();
 const Report = require('./models/report'); // Import your Mongoose model for the report collection
+const Enrollment = require('./models/enrollment'); // Import your Mongoose model for the report collection
 const mongoose = require('mongoose');
 
 
@@ -197,7 +196,6 @@ router.get('/reports/:id', async (req, res) => {
 
 // POST: Create a new report
 router.post('/reports', async (req, res) => {
-    
   try {
     const reportData = req.body;
     const newReport = await Report.create(reportData);
@@ -244,5 +242,51 @@ router.delete('/reports/:id', async (req, res) => {
 });
 
 // Add more API endpoints for other CRUD operations as needed
+// *********************************************************************************************************************************
+
+
+// POST: Create a new report
+router.post('/enrollments', async (req, res) => {
+  try {
+    const enrollmentData = req.body;
+    const newEnrollment = await Enrollment.create(enrollmentData);
+    res.json({ message: 'Report created successfully', id: newEnrollment._id });
+  } catch (err) {
+    console.error('Error inserting data into enrollment list:', err);
+    res.status(500).json({ error: 'Failed to insert data into enrollment list' });
+  }
+});
+
+// Get all enrollments
+router.get('/enrollments', async (req, res) => {
+  try {
+    const enrollments = await Enrollment.find({});
+    res.json(enrollments);
+    
+  } catch (err) {
+    console.error('Error fetching data from enrollment list:', err);
+    res.status(500).json({ error: 'Failed to fetch data from enrollment list' });
+  }
+});
+
+// PUT: Update an existing enrollment by ID
+router.put('/enrollments', async (req, res) => {
+  // const enrollmentId = req.params.id;
+  try {
+    const updatedEnrollment = await Enrollment.findOneAndUpdate({}, req.body, { new: true });
+    if (!updatedEnrollment) {
+      res.status(404).json({ message: 'Enrollment list not found' });
+    } else {
+      res.json({ message: 'Enrollment updated successfully' });
+    }
+  } catch (err) {
+    console.error('Error updating data in enrollment list:', err);
+    res.status(500).json({ error: 'Failed to update data in enrollment list' });
+  }
+});
+
+
+
+
 
 module.exports = router;
